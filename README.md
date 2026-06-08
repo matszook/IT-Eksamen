@@ -4,7 +4,7 @@
 
 Dette prosjektet er utviklet som en eksamensoppgave innen IT-driftsfaget. Formålet er å automatisere administrasjon av brukerkontoer i Active Directory ved hjelp av PowerShell.
 
-Løsningen skal redusere manuelt arbeid ved opprettelse, deaktivering og sletting av brukerkontoer. Systemet er spesielt rettet mot skoler, hvor nye elever må få kontoer ved skolestart, og avgangselever må fjernes når de slutter.
+Løsningen skal redusere manuelt arbeid ved opprettelse og deaktivering av brukerkontoer. Systemet er spesielt rettet mot skoler, hvor nye elever må få kontoer ved skolestart, og elever som slutter må håndteres på en effektiv og sikker måte.
 
 Prosjektet demonstrerer kompetanse innen IT-drift, automatisering, dokumentasjon og grunnleggende utvikling.
 
@@ -20,7 +20,7 @@ Hvordan kan brukeradministrasjon i Active Directory automatiseres for å reduser
 
 - Automatisere opprettelse av brukerkontoer.
 - Automatisere deaktivering av brukerkontoer.
-- Automatisere sletting av brukerkontoer.
+- Generere brukerkontoer basert på data fra CSV-filer.
 - Opprette logger over utførte handlinger.
 - Dokumentere løsningen slik at andre administratorer kan bruke og vedlikeholde systemet.
 
@@ -74,11 +74,7 @@ Scriptet vil:
 
 Deaktiverte brukere kan flyttes til en egen OU for tidligere elever.
 
-Dette gjør det enklere å holde Active Directory organisert.
-
-### Sletting av brukere
-
-Kontoer som ikke lenger er nødvendige kan slettes automatisk etter en definert periode.
+Dette gjør det enklere å holde Active Directory organisert og gir bedre oversikt over aktive og inaktive brukere.
 
 ### Logging
 
@@ -88,13 +84,24 @@ Alle handlinger registreres i loggfiler slik at administrator kan kontrollere hv
 
 ## Active Directory-struktur
 
-text eksamen.local  ├── Elever ├── TidligereElever ├── Lærere └── IT 
+text eksamen.local ├── Elever ├── TidligereElever ├── Lærere └── IT 
 
 ---
 
 ## Prosjektstruktur
 
-text . ├── README.md ├── docs │   ├── prosjektplan.md │   ├── installasjon.md │   ├── brukerveiledning.md │   ├── feilsoking.md │   └── sikkerhet.md ├── scripts └── data 
+text . ├── README.md ├── Data │   ├── lærere.csv │   ├── nye-elever.csv │   └── sluttede-elever.csv ├── Docs │   ├── Arkitektur.md │   ├── Brukerveiledning.md │   ├── Feilsøking.md │   ├── Installasjon.md │   ├── Prosjektplan.md │   └── Sikkerhet.md ├── Scripts │   ├── create-users.ps1 │   └── disable-users.ps1 ├── .gitignore └── .vscode 
+
+---
+
+## Kom i gang
+
+1. Installer og konfigurer Windows Server med AD DS og DNS.
+2. Opprett domenet eksamen.local.
+3. Klon repositoriet.
+4. Legg nødvendige CSV-filer i Data-mappen.
+5. Kjør ønsket PowerShell-script fra Scripts-mappen.
+6. Kontroller resultatet i Active Directory.
 
 ---
 
@@ -103,12 +110,12 @@ text . ├── README.md ├── docs │   ├── prosjektplan.md │   
 Prosjektet inneholder dokumentasjon for:
 
 - Installasjon
-- Konfigurasjon
+- Systemarkitektur
 - Brukerveiledning
 - Feilsøking
 - Sikkerhet
 
-Dokumentasjonen er skrevet for å gjøre løsningen enkel å implementere og vedlikeholde.
+Dokumentasjonen er skrevet for å gjøre løsningen enkel å implementere, bruke og vedlikeholde.
 
 ---
 
@@ -129,10 +136,9 @@ Dette reduserer risikoen for utilsiktet tap av data og gjør det mulig å gjenop
 
 Mulige forbedringer:
 
+- Automatisert sletting av inaktive brukerkontoer.
 - Webgrensesnitt for administrasjon.
 - Automatisk rapportering via e-post.
 - Integrasjon mot skoleadministrative systemer.
 - Rollebasert tilgangskontroll.
 - Automatisk arkivering av brukerdata før sletting.
-
----

@@ -2,26 +2,39 @@
 Import-Module ActiveDirectory
 
 # Leser CSV-fil med nye elever
-$users = Import-Csv "..\data\nye-elever.csv"
+$users = Import-Csv "..\Data\nye-elever.csv"
 
 foreach ($user in $users) {
 
     # Lager brukernavn (første bokstav fornavn + etternavn)
     $username = ($user.Fornavn.Substring(0,1) + $user.Etternavn).ToLower()
 
-    # Standard passord (kan endres senere)d
+    # Sjekk om bruker allerede finnes
+    $existingUser = Get-ADUser -Filter "SamAccountName -eq '$username'" -ErrorAction SilentlyContinue
+
+    if ($existingUser) {
+        Write-Host "Bruker finnes allerede: $username" -ForegroundColor Yellow
+        continue
+    }
+
+    # Standard passord (demo / eksamensbruk)
     $password = ConvertTo-SecureString "P@ssw0rd123!" -AsPlainText -Force
 
-    # Oppretter bruker i Active Directory
-    New-ADUser `
-        -Name "$($user.Fornavn) $($user.Etternavn)" `
-        -GivenName $user.Fornavn `
-        -Surname $user.Etternavn `
-        -SamAccountName $username `
-        -UserPrincipalName "$username@eksamen.local" `
-        -AccountPassword $password `
-        -Enabled $true `
-        -Path "OU=Elever,DC=eksamen,DC=local"
+    try {
+        # Oppretter bruker i Active Directory
+        New-ADUser `
+            -Name "$($user.Fornavn) $($user.Etternavn)" `
+            -GivenName $user.Fornavn `
+            -Surname $user.Etternavn `
+            -SamAccountName $username `
+            -UserPrincipalName "$username@eksamen.local" `
+            -AccountPassword $password `
+            -Enabled $true `
+            -Path "OU=Elever,DC=eksamen,DC=local"
 
-    Write-Host "Opprettet bruker: $username"
+        Write-Host "Opprettet bruker: $username" -ForegroundColor Green
+    }
+    catch {
+        Write-Host "Feil ved opprettelse av bruker: $username" -ForegroundColor Red
+    }
 }

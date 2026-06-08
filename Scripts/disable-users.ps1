@@ -2,15 +2,24 @@
 Import-Module ActiveDirectory
 
 # Leser CSV-fil med sluttede elever
-$users = Import-Csv "..\data\sluttede-elever.csv"
+$users = Import-Csv "..\Data\sluttede-elever.csv"
 
 foreach ($user in $users) {
 
-    # Deaktiverer bruker
-    Disable-ADAccount -Identity $user.Brukernavn
+    try {
+        # Henter bruker fra AD
+        $adUser = Get-ADUser -Identity $user.Brukernavn -ErrorAction Stop
 
-    # Flytter bruker til TidligereElever OU
-    Get-ADUser $user.Brukernavn | Move-ADObject -TargetPath "OU=TidligereElever,DC=eksamen,DC=local"
+        # Deaktiverer bruker
+        Disable-ADAccount -Identity $adUser.SamAccountName
 
-    Write-Host "Deaktivert og flyttet: $($user.Brukernavn)"
+        # Flytter bruker til TidligereElever OU
+        Move-ADObject -Identity $adUser.DistinguishedName `
+            -TargetPath "OU=TidligereElever,DC=eksamen,DC=local"
+
+        Write-Host "Deaktivert og flyttet: $($user.Brukernavn)" -ForegroundColor Green
+    }
+    catch {
+        Write-Host "Feil: Bruker ikke funnet eller kunne ikke behandles: $($user.Brukernavn)" -ForegroundColor Red
+    }
 }

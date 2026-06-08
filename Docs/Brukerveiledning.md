@@ -2,82 +2,101 @@
 
 ## Oversikt
 
-Dette systemet brukes til å administrere brukerkontoer i Active Directory ved hjelp av PowerShell.
+Dette systemet brukes til administrasjon av brukerkontoer i Active Directory ved hjelp av PowerShell og CSV-filer.
 
-Funksjoner:
+Systemet støtter:
 
-- Opprette nye brukere
-- Deaktivere brukere
-- Flytte brukere til OU for tidligere elever
-- Loggføre handlinger
+- Opprettelse av nye brukere
+- Deaktivering av brukere
+- Flytting av brukere til OU for tidligere elever
+- Logging av utførte handlinger
 
 ---
 
 ## Opprette nye brukere
 
-### Steg 1
+### 1. Oppdater CSV-fil
 
-Åpne CSV-filen:
+Åpne:
 
-text data/nye-elever.csv 
+Data/nye-elever.csv
 
-Legg inn brukerne som skal opprettes.
+Legg inn brukere i følgende format:
 
-Eksempel:
+Fornavn,Etternavn,Klasse
+Ola,Hansen,3ITA
+Kari,Olsen,3ITB
 
-csv Fornavn,Etternavn,Klasse Ola,Hansen,3ITA Kari,Olsen,3ITB 
+---
 
-### Steg 2
+### 2. Kjør PowerShell
 
-Åpne PowerShell som administrator.
+Åpne PowerShell som administrator og naviger til Scripts-mappen:
 
-### Steg 3
+powershell cd Scripts 
 
-Kjør opprettelsesskriptet:
+Kjør deretter skriptet:
 
 powershell .\create-users.ps1 
 
+---
+
 ### Resultat
 
-Systemet oppretter brukerne i Active Directory og plasserer dem i riktig OU.
+Brukerne opprettes automatisk i Active Directory og plasseres i OU-en Elever.
 
 ---
 
 ## Deaktivere brukere
 
-### Steg 1
+### 1. Oppdater CSV-fil
 
-Åpne filen:
+Åpne:
 
-text data/sluttede-elever.csv 
+Data/sluttede-elever.csv
 
-Legg inn brukernavnene som skal deaktiveres.
+Legg inn brukernavnene som skal behandles.
 
-### Steg 2
+---
 
-Kjør skriptet:
+### 2. Kjør PowerShell
 
-powershell .\disable-users.ps1 
+powershell cd Scripts .\disable-users.ps1 
+
+---
 
 ### Resultat
 
-Brukerne deaktiveres og flyttes til OU-en "TidligereElever".
+- Brukerne blir deaktivert i Active Directory  
+- Brukerne flyttes til OU-en TidligereElever  
 
 ---
 
 ## Kontroll av resultat
 
-Kontroller at:
+Etter kjøring bør du kontrollere:
 
-- Brukeren eksisterer i Active Directory.
-- Brukeren ligger i riktig OU.
-- Brukeren har riktig status.
-- Loggfilen inneholder registrert handling.
+- Brukeren finnes/ikke finnes i riktig OU
+- Konto-status (aktiv/deaktivert)
+- At skriptet ikke har gitt feilmeldinger
 
 ---
 
 ## Logging
 
-Alle handlinger registreres i loggfil.
+Alle handlinger logges i systemet.
 
-Administrator bør kontrollere loggen etter hver kjøring.
+Logg brukes til å:
+
+- Verifisere utførte operasjoner
+- Feilsøke eventuelle problemer
+- Dokumentere endringer i Active Directory
+
+---
+
+## Krav
+
+- Windows Server med Active Directory
+- PowerShell kjørt som administrator
+- CSV-filer korrekt formatert
+- Brukeren må ha nødvendige rettigheter i AD

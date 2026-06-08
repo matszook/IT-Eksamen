@@ -2,9 +2,9 @@
 
 ## Oversikt
 
-Denne guiden beskriver hvordan løsningen settes opp på en Windows Server med Active Directory.
+Denne guiden beskriver hvordan løsningen settes opp på en Windows Server med Active Directory Domain Services (AD DS).
 
-Systemet er utviklet for automatisert brukeradministrasjon i Active Directory.
+Systemet er utviklet for automatisert brukeradministrasjon i et Active Directory-miljø.
 
 ---
 
@@ -12,9 +12,9 @@ Systemet er utviklet for automatisert brukeradministrasjon i Active Directory.
 
 ### Infrastruktur
 
-- Proxmox eller annen virtualiseringsplattform
+- Proxmox Virtual Environment (eller annen virtualiseringsplattform)
 - Windows Server 2025
-- Tilgang til administratorbruker
+- Administratorrettigheter
 
 ### Programvare
 
@@ -26,27 +26,27 @@ Systemet er utviklet for automatisert brukeradministrasjon i Active Directory.
 
 ## Steg 1: Installere Windows Server
 
-1. Start VM i Proxmox.
-2. Velg installasjon av Windows Server.
-3. Velg “Desktop Experience”.
-4. Fullfør installasjon.
+1. Opprett og start en ny VM i Proxmox.
+2. Installer Windows Server 2025.
+3. Velg Desktop Experience.
+4. Fullfør installasjonen.
 5. Sett administratorpassord.
 
 ---
 
-## Steg 2: Gi server navn
+## Steg 2: Konfigurer servernavn
 
 1. Åpne Server Manager.
-2. Gå til System Settings.
-3. Endre navn til f.eks. AD-SERVER.
-4. Restart server.
+2. Gå til System Properties.
+3. Endre navn på serveren (f.eks. AD-SERVER).
+4. Restart serveren.
 
 ---
 
 ## Steg 3: Konfigurer nettverk
 
-1. Sett statisk IP-adresse.
-2. Sett DNS til serverens egen IP etter AD-installasjon.
+1. Sett statisk IP-adresse på serveren.
+2. Konfigurer DNS til å peke til serverens egen IP etter AD-installasjon.
 
 ---
 
@@ -56,7 +56,7 @@ Systemet er utviklet for automatisert brukeradministrasjon i Active Directory.
 2. Legg til roller:
    - Active Directory Domain Services
    - DNS Server
-3. Start installasjon.
+3. Fullfør installasjonen.
 
 ---
 
@@ -64,15 +64,15 @@ Systemet er utviklet for automatisert brukeradministrasjon i Active Directory.
 
 1. Velg “Promote this server to a domain controller”.
 2. Opprett nytt domene:
-   - eksempel: eksamen.local
-3. Fullfør installasjon.
-4. Restart server.
+   - eksamen.local
+3. Fullfør veiviseren.
+4. Serveren restartes automatisk.
 
 ---
 
 ## Steg 6: Opprett OU-struktur
 
-Opprett følgende OU-er:
+Opprett følgende organisasjonsenheter (OU):
 
 - Elever
 - TidligereElever
@@ -81,8 +81,15 @@ Opprett følgende OU-er:
 
 ---
 
-## Steg 7: Test oppsett
+## Steg 7: Testing av oppsett
 
-- Opprett testbrukere manuelt.
-- Test innlogging.
-- Verifiser at brukere ligger i riktig OU.
+1. Opprett testbrukere manuelt i Active Directory.
+2. Test innlogging med en bruker.
+3. Verifiser at brukere havner i riktig OU.
+4. Kontroller DNS-oppslag og domenetilkobling.
+
+---
+
+## Resultat
+
+Et ferdig Active Directory-miljø som er klart for automatisert brukeradministrasjon ved hjelp av PowerShell-skript.

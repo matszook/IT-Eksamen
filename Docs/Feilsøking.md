@@ -2,7 +2,7 @@
 
 ## Oversikt
 
-Dette dokumentet beskriver vanlige feil som kan oppstå ved bruk av systemet og hvordan de løses.
+Dette dokumentet beskriver vanlige feil som kan oppstå ved bruk av systemet, samt forslag til løsninger.
 
 ---
 
@@ -10,22 +10,22 @@ Dette dokumentet beskriver vanlige feil som kan oppstå ved bruk av systemet og 
 
 ### Feilmelding
 
-powershell The term 'Get-ADUser' is not recognized 
+powershell id="ad1" The term 'Get-ADUser' is not recognized 
 
 ### Årsak
 
-Active Directory-modulen er ikke installert eller lastet inn.
+Active Directory-modulen er ikke installert eller ikke importert i PowerShell.
 
 ### Løsning
 
-Kontroller at:
+Kontroller følgende:
 
 - Active Directory Domain Services er installert.
-- PowerShell kjører med administratorrettigheter.
+- PowerShell kjøres som administrator.
 
-Importer modulen:
+Importer modulen manuelt:
 
-powershell Import-Module ActiveDirectory 
+powershell id="ad2" Import-Module ActiveDirectory 
 
 ---
 
@@ -33,17 +33,17 @@ powershell Import-Module ActiveDirectory
 
 ### Mulige årsaker
 
-- Feil i CSV-fil.
-- Brukernavn eksisterer allerede.
-- Manglende rettigheter.
+- Feil format i CSV-fil
+- Brukernavn eksisterer allerede
+- Manglende rettigheter i Active Directory
 
 ### Løsning
 
 Kontroller:
 
-- Kolonnenavn i CSV.
-- At brukeren ikke finnes fra før.
-- At skriptet kjøres som administrator.
+- Kolonnenavn og struktur i CSV-filen
+- At brukeren ikke allerede finnes i AD
+- At skript kjøres som administrator
 
 ---
 
@@ -51,12 +51,13 @@ Kontroller:
 
 ### Mulige årsaker
 
-- Feil brukernavn i CSV-fil.
-- Brukeren finnes ikke.
+- Feil brukernavn i CSV-fil
+- Brukeren finnes ikke i Active Directory
 
 ### Løsning
 
-Søk etter brukeren i Active Directory og kontroller at brukernavnet stemmer.
+- Søk etter brukeren i Active Directory Users and Computers
+- Kontroller at brukernavnet stemmer med sAMAccountName
 
 ---
 
@@ -64,20 +65,26 @@ Søk etter brukeren i Active Directory og kontroller at brukernavnet stemmer.
 
 ### Mulige årsaker
 
-- Feil OU-navn.
-- OU eksisterer ikke.
+- Feil OU-navn
+- OU eksisterer ikke
+- Manglende rettigheter
 
 ### Løsning
 
-Kontroller OU-strukturen i Active Directory Users and Computers.
+Kontroller OU-struktur i Active Directory:
+
+- Elever
+- TidligereElever
+- Lærere
+- IT
 
 ---
 
-## Problem: Skript finner ikke CSV-fil
+## Problem: CSV-fil ikke funnet
 
 ### Feilmelding
 
-powershell Cannot find path 
+powershell id="csv1" Cannot find path 
 
 ### Løsning
 
@@ -85,7 +92,7 @@ Kontroller:
 
 - Filplassering
 - Filnavn
-- Relativ sti i skriptet
+- Relativ sti i skriptet (..\Data\)
 
 ---
 
@@ -93,25 +100,25 @@ Kontroller:
 
 ### Mulige årsaker
 
-- Active Directory er ikke konfigurert.
-- DNS fungerer ikke.
-- Nettverksfeil.
+- Active Directory er ikke riktig konfigurert
+- DNS fungerer ikke korrekt
+- Nettverksproblemer
 
 ### Løsning
 
 Kontroller:
 
 - Nettverkstilkobling
-- DNS-innstillinger
-- Status på domenekontroller
+- DNS-server (127.0.0.1 / localhost ved lokal DC)
+- At domenekontrolleren er online
 
 ---
 
 ## Generell feilsøkingsprosess
 
-1. Les feilmeldingen nøye.
-2. Kontroller loggfil.
-3. Verifiser CSV-data.
-4. Test kommandoen manuelt.
-5. Kontroller Active Directory.
-6. Kontroller nettverk og DNS.
+1. Les feilmelding nøye
+2. Kontroller CSV-data og input
+3. Verifiser Active Directory manuelt
+4. Test kommando i PowerShell
+5. Sjekk DNS og nettverk
+6. Se gjennom eventuelle loggfiler

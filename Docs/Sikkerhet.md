@@ -2,57 +2,64 @@
 
 ## Oversikt
 
-Sikkerhet er en viktig del av brukeradministrasjon i Active Directory. Dette prosjektet tar hensyn til både tilgangskontroll og livssyklusstyring av brukere.
+Sikkerhet er en sentral del av brukeradministrasjon i Active Directory. Dette prosjektet tar hensyn til tilgangskontroll, livssyklusstyring og risiko ved automatisering.
 
 ---
 
 ## Brukerlivssyklus
 
-Brukerkontoer skal ikke slettes direkte.
+Brukerkontoer skal ikke slettes direkte uten kontroll.
 
 Anbefalt prosess:
 
-1. Deaktiver bruker
-2. Flytt bruker til OU “TidligereElever”
-3. Behold konto i en definert periode
-4. Slett konto etter godkjenning eller utløp
+1. Deaktivere brukerkonto
+2. Flytte bruker til OU TidligereElever
+3. Beholde konto i en definert periode
+4. Slette konto etter godkjenning eller utløpt lagringsperiode
+
+Denne prosessen reduserer risiko for utilsiktet datatap og gir mulighet for gjenoppretting.
 
 ---
 
 ## Tilgangskontroll
 
-- Kun administratorer skal kunne kjøre PowerShell-skript.
-- Brukere skal plasseres i riktige OU-er for å begrense tilgang.
-- Gruppebasert tilgang bør brukes der det er mulig.
+- Kun administratorer skal ha tilgang til å kjøre PowerShell-skript som endrer Active Directory.
+- Brukere skal plasseres i riktige OU-er for å sikre korrekt tilgangsstyring.
+- Rollebasert tilgang (RBAC) bør benyttes der det er mulig.
 
 ---
 
-## Logging
+## Logging og sporbarhet
 
-Alle handlinger skal logges:
+Alle handlinger i systemet bør logges:
 
 - Opprettelse av brukere
-- Deaktivering
-- Flytting
-- Sletting
+- Deaktivering av brukere
+- Flytting mellom OU-er
+- Eventuell sletting
 
-Dette gir sporbarhet og gjør feilsøking enklere.
+Logging gir:
+- Sporbarhet
+- Feilsøking
+- Kontroll ved uønskede endringer
 
 ---
 
-## Risiko
+## Risikoanalyse
 
 | Risiko | Tiltak |
 |--------|--------|
-| Feil sletting av bruker | Deaktivering før sletting |
-| Feil i CSV-fil | Validering før kjøring |
-| Uautoriserte handlinger | Begrens admin-tilgang |
+| Utilsiktet sletting av brukere | Deaktivering før eventuell sletting |
+| Feil i CSV-data | Validering og kontroll før kjøring |
+| Uautorisert tilgang til skript | Begrenset tilgang til administratorer |
+| Feil OU-plassering | Standardisert OU-struktur |
 
 ---
 
 ## Beste praksis
 
 - Bruk alltid testmiljø før produksjon.
-- Dokumenter alle endringer.
-- Bruk OU-struktur for organisering.
-- Unngå direkte sletting uten kontroll.
+- Dokumenter alle endringer i systemet.
+- Bruk strukturert OU-design for organisering.
+- Unngå direkte sletting uten verifisering.
+- Følg prinsippet om minst mulig privilegium (least privilege).

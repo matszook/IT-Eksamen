@@ -87,17 +87,11 @@ Alle handlinger registreres i loggfiler slik at administrator kan kontrollere hv
 
 
 ```text
-
 eksamen.local
-
 ├── Elever
-
 ├── TidligereElever
-
 ├── Lærere
-
 └── IT
-
 ```
 
 ---
@@ -107,43 +101,24 @@ eksamen.local
 
 
 ```text
-
 .
-
 ├── README.md
-
 ├── Data
-
 │   ├── lærere.csv
-
 │   ├── nye-elever.csv
-
 │   └── sluttede-elever.csv
-
 ├── Docs
-
 │   ├── Arkitektur.md
-
 │   ├── Brukerveiledning.md
-
 │   ├── Feilsøking.md
-
 │   ├── Installasjon.md
-
 │   ├── Prosjektplan.md
-
 │   └── Sikkerhet.md
-
 ├── Scripts
-
 │   ├── create-users.ps1
-
 │   └── disable-users.ps1
-
 ├── .gitignore
-
 └── .vscode
-
 ```
 ---
 

@@ -14,9 +14,9 @@ Hvordan kan administrasjon av brukerkontoer i Active Directory automatiseres for
 
 ## Bakgrunn
 
-Ved skolestart må nye elever få brukerkontoer og riktige tilganger. Når elever slutter må kontoene deaktiveres eller slettes. Dette gjøres ofte manuelt og kan være tidkrevende.
+I skolemiljøer er det behov for å håndtere brukerkontoer for elever og ansatte. Nye brukere må opprettes ved skolestart, og eksisterende brukere må deaktiveres eller fjernes når de slutter.
 
-Målet med prosjektet er å utvikle en løsning som automatiserer disse oppgavene ved hjelp av PowerShell og Active Directory.
+Denne prosessen gjøres ofte manuelt og kan være tidkrevende og feilutsatt. Målet er å utvikle en automatisert løsning ved bruk av PowerShell og Active Directory.
 
 ---
 
@@ -24,18 +24,17 @@ Målet med prosjektet er å utvikle en løsning som automatiserer disse oppgaven
 
 ### Hovedmål
 
-Utvikle et system som kan automatisere livssyklusen til brukerkontoer i Active Directory.
+Utvikle en løsning som automatiserer livssyklusen til brukerkontoer i Active Directory.
 
 ### Delmål
 
-- Installere og konfigurere Windows Server.
-- Installere Active Directory Domain Services.
+- Konfigurere Windows Server med Active Directory.
 - Opprette et testdomene.
 - Lage organisasjonsenheter (OU-er).
-- Opprette testbrukere.
+- Opprette testbrukere fra CSV-data.
 - Utvikle PowerShell-skript for brukeradministrasjon.
 - Dokumentere løsningen.
-- Demonstrere løsningen gjennom testing.
+- Teste og verifisere funksjonalitet.
 
 ---
 
@@ -43,16 +42,15 @@ Utvikle et system som kan automatisere livssyklusen til brukerkontoer i Active D
 
 ### Drift
 
-- Proxmox
+- Proxmox Virtual Environment
 - Windows Server 2025
-- Active Directory
+- Active Directory Domain Services
 - DNS
 
-### Utvikling
+### Automatisering
 
 - PowerShell
 - CSV-filer
-- GitHub
 
 ### Dokumentasjon
 
@@ -63,12 +61,13 @@ Utvikle et system som kan automatisere livssyklusen til brukerkontoer i Active D
 
 ## Planlagt Active Directory-struktur
 
+```text
 eksamen.local
-
-- Elever
-- TidligereElever
-- Lærere
-- IT
+├── Elever
+├── TidligereElever
+├── Lærere
+└── IT
+```
 
 ---
 
@@ -78,18 +77,18 @@ eksamen.local
 
 Systemet skal:
 
-- Lese brukerinformasjon fra CSV-fil.
-- Opprette brukerkontoer automatisk.
-- Opprette brukernavn.
+- Lese brukerdata fra CSV-fil.
+- Opprette brukerkontoer i Active Directory.
+- Generere brukernavn.
 - Plassere brukere i riktig OU.
 
 ### Deaktivere brukere
 
 Systemet skal:
 
-- Finne brukere fra CSV-fil.
-- Deaktivere kontoene.
-- Loggføre handlingen.
+- Finne brukere basert på inputdata.
+- Deaktivere brukerkontoer.
+- Loggføre handlinger.
 
 ### Flytte brukere
 
@@ -97,50 +96,56 @@ Systemet skal:
 
 - Flytte deaktiverte brukere til OU-en TidligereElever.
 
-### Slette brukere
+### Fjerne brukere
 
 Systemet skal:
 
-- Slette brukere som ikke lenger skal eksistere.
+- Fjerne brukere fra Active Directory når de ikke lenger er nødvendige.
 
 ### Logging
 
 Systemet skal:
 
-- Opprette loggfiler.
-- Registrere dato, tidspunkt og handling.
+- Registrere handlinger i loggfiler.
+- Lagre dato, tid og utført operasjon.
 
 ---
 
 ## Testing
 
-### Test 1
+### Scenario 1 – Opprette brukere
 
-Opprette flere brukere fra CSV-fil.
-
-Forventet resultat:
-Brukerne opprettes korrekt i Active Directory.
-
-### Test 2
-
-Deaktivere flere brukere.
+Flere brukere importeres fra CSV-fil.
 
 Forventet resultat:
-Brukerne blir deaktivert.
+Brukere opprettes korrekt i riktig OU.
 
-### Test 3
+---
 
-Flytte brukere til TidligereElever.
+### Scenario 2 – Deaktivering
 
-Forventet resultat:
-Brukerne flyttes til riktig OU.
-
-### Test 4
-
-Slette brukere.
+Brukere deaktiveres basert på inputdata.
 
 Forventet resultat:
-Brukerne fjernes fra Active Directory.
+Kontoene blir deaktivert i Active Directory.
+
+---
+
+### Scenario 3 – Flytting
+
+Deaktiverte brukere flyttes til TidligereElever.
+
+Forventet resultat:
+Brukere havner i korrekt OU.
+
+---
+
+### Scenario 4 – Fjerning
+
+Brukere fjernes fra Active Directory.
+
+Forventet resultat:
+Brukere eksisterer ikke lenger i domenet.
 
 ---
 
@@ -148,40 +153,35 @@ Brukerne fjernes fra Active Directory.
 
 Prosjektet demonstrerer kompetanse innen:
 
-- Drift av servere.
-- Brukeradministrasjon.
-- Active Directory.
-- Automatisering.
-- Feilsøking.
-- Dokumentasjon.
-- Sikkerhet.
-- Versjonskontroll med GitHub.
+- Serverdrift
+- Active Directory
+- Brukeradministrasjon
+- Automatisering med PowerShell
+- Feilsøking
+- Dokumentasjon
+- Sikkerhet
+- Versjonskontroll med GitHub
 
 ---
 
 ## Fremdriftsplan
 
-### Fredag 6. juni
+### Før eksamen
 
-- Opprette VM i Proxmox.
-- Konfigurere VM.
+- Planlegge løsning og struktur
+- Etablere GitHub-repository
+- Klargjøre dokumentasjon
 
-### Søndag 8. juni
+### Implementasjonsfase
 
-- Lage dokumentasjon.
-- Planlegge løsning.
-- Opprette GitHub-repository.
-
-### Mandag 9. juni
-
-- Installere Windows Server.
-- Konfigurere Active Directory.
-- Opprette OU-er.
-- Lage testbrukere.
-- Utvikle og teste PowerShell-skript.
+- Installere og konfigurere Windows Server
+- Opprette Active Directory
+- Lage OU-struktur
+- Utvikle PowerShell-skript
+- Teste funksjonalitet
 
 ### Eksamensdag
 
-- Demonstrere løsning.
-- Forklare designvalg.
-- Presentere dokumentasjon.
+- Videreutvikle løsningen
+- Teste og demonstrere funksjonalitet
+- Presentere dokumentasjon og valg

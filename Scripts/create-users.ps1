@@ -36,5 +36,6 @@ foreach ($user in $users) {
     }
     catch {
         Write-Host "Feil ved opprettelse av bruker: $username" -ForegroundColor Red
+        Write-Host $_.Exception.Message -ForegroundColor Yellow
     }
 }

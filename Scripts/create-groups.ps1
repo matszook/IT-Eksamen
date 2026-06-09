@@ -11,6 +11,14 @@ foreach ($user in $users) {
 
     $username = ($user.Fornavn.Substring(0,1) + $user.Etternavn).ToLower()
 
+    $base = $username
+    $i = 1
+
+    while (Get-ADUser -Filter "SamAccountName -eq '$username'" -ErrorAction SilentlyContinue) {
+        $username = "$base$i"
+        $i++
+    }
+
     # SJEKK: finnes brukeren i AD
     $adUser = Get-ADUser -Filter "SamAccountName -eq '$username'" -ErrorAction SilentlyContinue
 

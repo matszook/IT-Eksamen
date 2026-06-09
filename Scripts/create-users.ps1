@@ -9,12 +9,13 @@ foreach ($user in $users) {
     # Lager brukernavn (første bokstav fornavn + etternavn)
     $username = ($user.Fornavn.Substring(0,1) + $user.Etternavn).ToLower()
 
-    # Sjekk om bruker allerede finnes
-    $existingUser = Get-ADUser -Filter "SamAccountName -eq '$username'" -ErrorAction SilentlyContinue
+    # Sjekk at bruker finnes
+    $base = $username
+    $i = 1
 
-    if ($existingUser) {
-        Write-Host "Bruker finnes allerede: $username" -ForegroundColor Yellow
-        continue
+    while (Get-ADUser -Filter "SamAccountName -eq '$username'" -ErrorAction SilentlyContinue) {
+        $username = "$base$i"
+        $i++
     }
 
     # Standard passord (demo / eksamensbruk)

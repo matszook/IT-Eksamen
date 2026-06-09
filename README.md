@@ -2,7 +2,7 @@
 
 ## Prosjektbeskrivelse
 
-Dette prosjektet er utviklet som en eksamensoppgave innen IT-driftsfaget. Formålet er å automatisere administrasjon av brukerkontoer i Active Directory ved hjelp av PowerShell.
+Dette prosjektet er et eksamensprosjekt innen IT-driftsfaget. Formålet er å automatisere administrasjon av brukere i Active Directory ved hjelp av PowerShell.
 
 Løsningen skal redusere manuelt arbeid ved opprettelse og deaktivering av brukerkontoer. Systemet er spesielt rettet mot skoler, hvor nye elever må få kontoer ved skolestart, og elever som slutter må håndteres på en effektiv og sikker måte.
 

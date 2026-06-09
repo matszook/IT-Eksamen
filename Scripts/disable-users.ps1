@@ -15,7 +15,7 @@ foreach ($user in $users) {
 
         # Flytter bruker til TidligereElever OU
         Move-ADObject -Identity $adUser.DistinguishedName `
-            -TargetPath "OU=TidligereElever,DC=eksamen,DC=local"
+            -TargetPath "OU=TidligereElever,DC=eksamen,DC=lab"
 
         Write-Host "Deaktivert og flyttet: $($user.Brukernavn)" -ForegroundColor Green
     }

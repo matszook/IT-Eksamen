@@ -27,10 +27,10 @@ foreach ($user in $users) {
             -GivenName $user.Fornavn `
             -Surname $user.Etternavn `
             -SamAccountName $username `
-            -UserPrincipalName "$username@eksamen.local" `
+            -UserPrincipalName "$username@eksamen.lab" `
             -AccountPassword $password `
             -Enabled $true `
-            -Path "OU=Elever,DC=eksamen,DC=local"
+            -Path "OU=Elever,DC=eksamen,DC=lab"
 
         Write-Host "Opprettet bruker: $username" -ForegroundColor Green
     }
